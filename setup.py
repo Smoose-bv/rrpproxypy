@@ -28,4 +28,9 @@ setup(
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
     ],
+    command_options={
+        'build_sphinx': {
+            'version': ('setup.py', version),
+        },
+    },
 )
