@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
+### Added
+- Function to add default command line args to a parser.
 
 ## [0.1.0] - 2019-02-15
 ### Added

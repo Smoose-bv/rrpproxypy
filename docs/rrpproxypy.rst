@@ -11,3 +11,11 @@ Client
     :members:
     :undoc-members:
     :show-inheritance:
+
+Helpers
+-------
+
+.. automodule:: rrpproxypy.args
+    :members:
+    :undoc-members:
+    :show-inheritance:
