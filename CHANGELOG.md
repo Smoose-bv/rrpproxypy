@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning].
 ### Added
 - Function to add default command line args to a parser.
 
+### Changed
+- Parse responses differently; a single dict is returned.
+
 ## [0.1.0] - 2019-02-15
 ### Added
 - Initial publication.

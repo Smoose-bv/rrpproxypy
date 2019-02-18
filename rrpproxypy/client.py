@@ -1,4 +1,5 @@
 from urllib import parse
+import configparser
 import datetime
 import re
 
@@ -50,33 +51,43 @@ class RRPproxy:
         """
         Convert a response to a dict.
 
+        Properties are automatically converted to lists whenever there are
+        multiple indexes for the same property.
+
         Args:
             response (str): The response text.
 
         Returns:
-            A list of response values.
+            dict: The response as a dict.
 
         """
-        results = {}
-        columns = []
-        pattern = r'^property\[([^]]+)\]\[(\d+)\]\s+=\s+?(.*)$'
-        for match in re.finditer(pattern, response, re.MULTILINE):
-            name = match.group(1)
-            value = match.group(3)
-            if name == 'column':
-                columns.append(value)
-                continue
-            index = int(match.group(2))
-            result = results.setdefault(index, {})
-            result[name] = try_parse(value)
-        if columns:
-            for result in results.values():
-                for key in list(result):
-                    if key not in columns:
-                        result.pop(key)
-        return [
-            results[key]
-            for key in sorted(results.keys())]
+        # Cut off the EOF line.
+        response = response[:response.find('EOF', -10)]
+        parser = configparser.ConfigParser(
+            interpolation=None)
+        parser.read_string(response)
+        response = dict(parser.items('RESPONSE'))
+        for key in sorted(response):
+            if key.startswith('property['):
+                value = response.pop(key)
+                name_end_index = key.find(']', 9)
+                name = key[9:name_end_index]
+                # XXX: The index in the response is ignored. If this somehow
+                # matters some post processing of these properties needs to
+                # occur. (Can't do it in-place as `sorted` is not a natural
+                # sort.) Anyway, code to get the index is commented below.
+                #
+                # index_start_index = key.find('[', name_end_index) + 1
+                # index_end_index = key.find(']', index_start_index)
+                # index = int(key[index_start_index:index_end_index])
+                properties = response.setdefault('properties', {})
+                try:
+                    properties[name].append(value)
+                except KeyError:
+                    properties[name] = value
+                except AttributeError:
+                    properties[name] = [properties[name], value]
+        return response
 
     def query_domain_list(self):
         """
@@ -145,4 +156,4 @@ class RRPproxy:
         response = self.request(
             'StatusDomain',
             domain=domain)
-        return response[0]
+        return response
