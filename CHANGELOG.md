@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning].
 ## [Unreleased]
 ### Added
 - Function to add default command line args to a parser.
+- DomainPrice command.
 
 ### Changed
 - Parse responses differently; a single dict is returned.

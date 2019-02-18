@@ -5,6 +5,8 @@ import re
 
 import requests
 
+from rrpproxypy import exceptions
+
 
 def try_parse(value):
     """
@@ -88,6 +90,38 @@ class RRPproxy:
                 except AttributeError:
                     properties[name] = [properties[name], value]
         return response
+
+    def domain_price(
+            self,
+            domain,
+            **params):
+        """
+        Get the price for an action on a domain.
+
+        Args:
+            domain (str): The domain name.
+            **params: Additional params.
+
+        Returns:
+            dict: The response.
+
+        Raises:
+            Failure: When the request has failed.
+
+        Note:
+            See the wiki for more info:
+            https://wiki.rrpproxy.net/api/api-command/DomainPrice
+
+        """
+        response = self.request(
+            'DomainPrice',
+            domain=domain,
+            **params
+        )
+        if int(response['code']) == 200:
+            return response
+        else:
+            raise exceptions.Failure(response['description'])
 
     def query_domain_list(self):
         """
