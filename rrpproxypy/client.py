@@ -123,6 +123,31 @@ class RRPproxy:
         else:
             raise exceptions.Failure(response['description'])
 
+    def get_zone_info(
+            self,
+            zone,
+            **params):
+        """
+        Get information about a zone (TLD).
+
+        Args:
+            zone (str): The zone to query.
+            **params: Additional params.
+
+        Returns:
+            dict: The response.
+
+        Note:
+            See the wiki for more info:
+            https://wiki.rrpproxy.net/api/api-command/GetZoneInfo
+
+        """
+        response = self.request(
+            'GetZoneInfo',
+            zone=zone,
+            **params)
+        return response
+
     def query_domain_list(self):
         """
         Query a list of domains.

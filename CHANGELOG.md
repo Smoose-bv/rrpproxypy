@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning].
 ### Added
 - Function to add default command line args to a parser.
 - DomainPrice command.
+- GetZoneInfo command.
 
 ### Changed
 - Parse responses differently; a single dict is returned.
