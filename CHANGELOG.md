@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
+### Added
+- ConvertCurrency command.
 
 ## [0.1.1] - 2019-02-18
 ### Added

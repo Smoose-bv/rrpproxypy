@@ -91,6 +91,35 @@ class RRPproxy:
                     properties[name] = [properties[name], value]
         return response
 
+    def convert_currency(
+            self,
+            amount,
+            from_,
+            to):
+        """
+        Convert an amount in a certain currency.
+
+        Convert between two currencies.
+
+        Args:
+            amount (Decimal): The amount to convert.
+            from_ (str): The currency from which to convert.
+            to (str): The currency to which to convert.
+
+        Returns:
+            dict: The response.
+
+        """
+        params = {
+            'from': from_,
+        }
+        response = self.request(
+            'ConvertCurrency',
+            amount=amount,
+            to=to,
+            **params)
+        return response
+
     def domain_price(
             self,
             domain,
