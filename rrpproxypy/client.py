@@ -1,7 +1,6 @@
 from urllib import parse
 import configparser
 import datetime
-import re
 
 import requests
 
