@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning].
 ### Added
 - ConvertCurrency command.
 
+### Fixed
+- Preserve response indexes.
+
 ## [0.1.1] - 2019-02-18
 ### Added
 - Function to add default command line args to a parser.

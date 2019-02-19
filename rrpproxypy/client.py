@@ -74,21 +74,20 @@ class RRPproxy:
                 value = response.pop(key)
                 name_end_index = key.find(']', 9)
                 name = key[9:name_end_index]
-                # XXX: The index in the response is ignored. If this somehow
-                # matters some post processing of these properties needs to
-                # occur. (Can't do it in-place as `sorted` is not a natural
-                # sort.) Anyway, code to get the index is commented below.
-                #
-                # index_start_index = key.find('[', name_end_index) + 1
-                # index_end_index = key.find(']', index_start_index)
-                # index = int(key[index_start_index:index_end_index])
+                index_start_index = key.find('[', name_end_index) + 1
+                index_end_index = key.find(']', index_start_index)
+                index = int(key[index_start_index:index_end_index])
                 properties = response.setdefault('properties', {})
-                try:
-                    properties[name].append(value)
-                except KeyError:
-                    properties[name] = value
-                except AttributeError:
-                    properties[name] = [properties[name], value]
+                properties.setdefault(name, []).append((value, index))
+        # Sort properties by index. This should preserve the indexes.
+        for name, values in response['properties'].items():
+            values = [
+                value for value, index
+                in sorted(values, key=lambda item: item[1])]
+            if len(values) == 1:
+                response['properties'][name] = values[0]
+            else:
+                response['properties'][name] = values
         return response
 
     def convert_currency(
