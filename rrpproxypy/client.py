@@ -190,6 +190,19 @@ class RRPproxy:
             wide=1)
         return response
 
+    def query_exchange_rates(
+            self):
+        """
+        Query the exchange rates.
+
+        Returns:
+            dict: The response.
+
+        """
+        response = self.request(
+            'QueryExchangeRates')
+        return response
+
     def request(
             self,
             command,

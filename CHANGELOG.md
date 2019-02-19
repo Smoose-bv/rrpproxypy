@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning].
 ## [Unreleased]
 ### Added
 - ConvertCurrency command.
+- QueryExchangeRates command.
 
 ### Fixed
 - Preserve response indexes.
