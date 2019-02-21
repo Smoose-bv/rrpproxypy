@@ -160,7 +160,6 @@ def test_status_domain(
     """
     try:
         domain = client.query_domain_list()['properties']['domain'][0]
-        [][0]
     except IndexError:
         pytest.xfail('Could not query a domain. No domains registered?')
     response = client.status_domain(
